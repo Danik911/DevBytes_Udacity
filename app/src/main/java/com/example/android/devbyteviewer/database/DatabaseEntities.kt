@@ -17,3 +17,32 @@
 
 package com.example.android.devbyteviewer.database
 
+import android.provider.MediaStore
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.example.android.devbyteviewer.domain.Video
+
+@Entity
+data class DatabaseVideo constructor(
+    @PrimaryKey
+    val url: String,
+    val updated: String,
+    val title: String,
+    val descriptions: String,
+    val thumbnail:String
+)
+
+
+// Converts from database object to domain object
+fun List<DatabaseVideo>.asDomainModel(): List<Video>{
+    return map { databaseVideo ->
+        Video(
+            url = databaseVideo.url,
+            title = databaseVideo.title,
+            description =  databaseVideo.descriptions,
+            updated = databaseVideo.updated,
+            thumbnail = databaseVideo.thumbnail
+        )
+    }
+}
+
